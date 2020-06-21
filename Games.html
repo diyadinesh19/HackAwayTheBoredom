@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body{background-color: #def4fc;}
+      a {text-decoration: none;}
+      h1{
+        background-color:#448197;
+        width:100%;
+        height:100px;
+        z-index:2;
+        position: fixed;
+        top:0;
+        margin:0;
+        padding:0;
+        display:block;
+        font-size:95px;
+        color:white;
+        text-align:center;
+        font-family: "Courier New", Courier, monospace;
+      }
+      h1:hover{
+        color: #448197;
+        background-color: white;
+      }
+      /*ul{
+        background-color:#448197;
+        width:100%;
+        height:100px;
+        z-index:2;
+        position: fixed;
+        top:0;
+        margin:0;
+        padding:0;
+        display:block;
+        <!--#D5D9DA;-->
+        text-align:center;
+      }
+      li{
+        font-size:80px;
+        display:inline-block;
+        color:white;
+        text-align:center;
+        <!--#D5D9DA;-->
+        font-family: "Courier New", Courier, monospace;
+        width: 33%;
+      }
+      li:hover{
+        color: #448197;
+        background-color: white;
+      }*/
+      .xotable{
+        position: relative;
+        top: -580px;
+        z-index:0;
+      }
+      .xorow{
+        background: #f4f7f8;
+  border: 1px solid black;
+  margin-bottom: 5px;
+      }
+      .xodata{
+        font-family: 'Lato', sans-serif;
+          border: 1px solid black;
+  font-weight: 400;
+  padding: 20px;
+  text-align: left;
+  width: 150px;
+  height: 150px;
+  font-size: 48px;
+  text-align: center;
+      }
+      .GameMessage{
+        font-family: "Courier New", Courier, monospace;
+        position: relative;
+        top: -600px;
+        text-align: left;
+        font-size: 45px;
+      }
+      .GameRestart{
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        position: relative;
+        top: -630px;
+      }
+      .addtodo{
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        position: relative;
+        top: 50px;
+        left:650px;
+      }
+      #todoInput{
+        position: relative;
+        top: 50px;
+        left: 650px;
+        width: 450px;
+        height: 50px;
+      }
+      label{
+        font-color: black;
+        font-size: 36px;
+        position: relative;
+        top: 60px;
+        left: 650px;
+
+      }
+      #addList{
+        background: #f4f7f8;
+        border: 1px solid black;
+        margin-bottom: 5px;
+        padding: 20px;
+        width: 510px;
+        height: 550px;
+        position: relative;
+        top: 50px;
+        left: 910px;
+        z-index: 1;
+        overflow: scroll;
+      }
+      .stop-scrolling {
+        height: 100%;
+        overflow: hidden;
+      }
+      .item{
+        background: white;
+        font-size: 36px;
+        text-align: center;
+        font-weight: 100;
+        color: black;
+        width: 500px;
+        height: 50px;
+      }
+      .item:hover{
+        background: black;
+        color: white;
+      }
+    </style>
+
+  </head>
+  <body class="stop-scrolling">
+    <a href="HomePage.html"><h1>Home</h1></a>
+    <ul>
+      <a href="HomePage.html"><li>Home</li></a>
+      <li>Checklist</li>
+      <li>Games</li>
+    </ul>
+
+    <div>
+      <label for="todoInput">Enter To-Do List:</label>
+      <input type="text" id="todoInput" placeholder="Enter Here...">
+      <button class="addtodo">Add</button>
+      <ul id="addList">
+      </ul>
+
+    </div>
+    <div>
+      <table class="xotable">
+        <tbody>
+          <tr class="xorow">
+            <td class="xodata" data-cell-index="1">_</td>
+            <td class="xodata" data-cell-index="2">_</td>
+            <td class="xodata" data-cell-index="3">_</td>
+          </tr>
+          <tr class="xorow">
+            <td class="xodata" data-cell-index="4">_</td>
+            <td class="xodata" data-cell-index="5">_</td>
+            <td class="xodata" data-cell-index="6">_</td>
+          </tr>
+          <tr class="xorow">
+            <td class="xodata" data-cell-index="7">_</td>
+            <td class="xodata" data-cell-index="8">_</td>
+            <td class="xodata" data-cell-index="9">_</td>
+          </tr>
+        </tbody>
+      </table>
+      <h2 class="GameMessage">Click a cell to start!</h2>
+      <button class="GameRestart">Restart</button>
+    </div>
+    <div>
+
+    </div>
+    <script>
+    var tbl = ["","","", "","","", "","",""];
+    var curPlay = "X";
+
+    var keepPlaying = true;
+    var posWins = [
+    [0,1,2],
+    [3,4,5],
+    [6,7,8],
+    [0,3,6],
+    [1,4,7],
+    [2,5,8],
+    [0,4,8],
+    [2,4,6]
+  ];
+    function play(clickedCellEvent){
+      //console.log("HI");
+      if(keepPlaying === false) return;
+      document.getElementsByClassName("GameMessage")[0].innerHTML = "The next player is "+ (curPlay==="X"?"O":"X");
+      var data = clickedCellEvent.target;
+  //  var data = this.target;
+      var temp = parseInt(data.getAttribute('data-cell-index'));
+      if(data.innerHTML!=='_') return;
+      tbl[temp-1]=curPlay;
+      data.innerHTML=curPlay;
+      if(curPlay === "X") data.style.color = "#0000FF";
+      else data.style.color = "red";
+
+      var b = false;
+      for(var i = 0; i<=7; i+=1){
+        //console.log("HI");
+        var win = posWins[i];
+        var a = tbl[win[0]]; var d = tbl[win[1]]; var c = tbl[win[2]];
+        if(a === "" || d === "" || c === ""){
+          continue;
+        }
+        if(a === d && d === c){
+          b = true;
+          break;
+        }
+      }
+      if(b === true){
+        document.getElementsByClassName("GameMessage")[0].innerHTML = "Player "+curPlay+" won!";
+
+        keepPlaying = false;
+        return;
+      }
+      if(tbl.includes("") === false){
+        document.getElementsByClassName("GameMessage")[0].innerHTML = "It's a draw!";
+         keepPlaying = false;
+         return;
+       }
+      if(curPlay ==='X') curPlay = "O";
+      else curPlay = "X";
+
+    }
+
+    function handleRestart(clickedCellEvent){
+      var tbl = ["","","", "","","", "","",""];
+      var curPlay = "X";
+      var keepPlaying = true;
+      var board = document.getElementsByClassName("xodata");
+      for(var i = 0; i<board.length; i++){
+        board[i].innerHTML = "_";
+        board[i].style.color = "black";
+      }
+      document.getElementsByClassName("GameMessage")[0].innerHTML = "Click a cell to start!"
+
+
+    }
+    document.querySelectorAll('.xodata').forEach(data => data.addEventListener('click', play));
+    document.querySelector('.GameRestart').addEventListener('click', handleRestart);
+
+    function addElement(){
+      console.log("HI");
+      var item = document.createElement("li");
+      item.className = "item";
+      var input = document.getElementById("todoInput").value;
+      var text = document.createTextNode(input);
+      item.appendChild(text);
+      if(input===''){alert("You have to enter a valid input!");}
+      else{
+        document.getElementById("addList").appendChild(item);
+      }
+      document.getElementById("todoInput").value="";
+    }
+
+    document.querySelector('.addtodo').addEventListener('click', addElement);
+
+    function finish(clickedCellEvent){
+      var data = clickedCellEvent.target;
+      var list = document.getElementById("addList");
+      var c  = 0;
+      for(var i = 0; i<list.length; i++){
+        if(data===list[i]){c=i; break;}
+      }
+        list.removeChild(list.childNodes[c]);   
+    }
+    document.querySelectorAll('.item').forEach(data => data.addEventListener('click', finish));
+    </script>
+  </body>
+</html>

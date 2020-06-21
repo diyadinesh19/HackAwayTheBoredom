@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      a {text-decoration: none;}
+      .center {
+        display:block;
+        margin-left:auto;
+        margin-right:auto;
+        width:50%;
+        height:500px;
+      }
+      .name{
+        background-color:#448197;
+        <!--#B1E0F1;-->
+        width:100%;
+        height:100px;
+        font-size:80px;
+        z-index:2;
+        text-align:center;
+        position: relative;
+        top:0;
+        margin:0;
+        padding:0;
+        display:block;
+        color:white;
+        <!--#D5D9DA;-->
+        font-family: "Courier New", Courier, monospace;
+      }
+      #menuGridContainer{
+          height:300px;
+          width:100%;
+          display: grid;
+          grid-template-columns: 550px ;
+          grid-template-rows: 1fr 1fr 1fr;
+          grid-gap: 50px 50px;
+          background-color: white;
+          position: relative;
+          top:15px;
+          justify-contents: center;
+          z-index:3;
+
+
+      }
+      .menuTitle{
+        z-index:3;
+        display: block;
+        color: #a687ff;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 60px;
+        text-align: center;
+
+      }
+      .menuTitle:hover{
+        color: white;
+        background-color: #c3b3f2;
+      }
+      .description{
+        position: relative;
+        top: -750px;
+        left: 750px;
+        display: block;
+        color: #a687ff;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 40px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="name">Hack Away The Boredom</header>
+    <div id="menuGridContainer">
+      <a href="./Ideas.html">
+      <div class="menuTitle">
+        <img src="Images/Question.jpg" width="100%" height="200px" alt="Question Mark">
+        What do I do?
+      </div>
+      </a>
+      <a href="./Games.html">
+      <div class="menuTitle">
+        <img src="Images/Games.jpg" width="100%" height="200px">
+        Games/To-Do List
+      </div>
+      </a>
+      <p class="description">
+        On your to-do list, you can list your tasks to complete for the day.
+         Everytime you complete a task, you are allowed to play a game online.
+        If you need ideas for things to do to spend your time productively,
+        take a look at the “What do I do?” section for inspiration!
+      </p>
+      <!--
+      <a href="./About.html">
+      <div class="menuTitle">
+        <img src="Images/Instructions.jpg" width="100%" height="200px">
+          About
+      </div>
+      </a>-->
+  </body>
+</html>
